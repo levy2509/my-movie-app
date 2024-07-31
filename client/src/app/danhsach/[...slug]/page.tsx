@@ -1,95 +1,80 @@
+import Filter from "@/components/Filter";
+import { theloais } from "@/components/HeaderDropdownLoai";
+import { quocgia } from "@/components/HeaderDropdownQuocGia";
+import { MoviesData } from "@/components/NewestMovies";
+import PaginationComponent from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
-import PaginationComponent from "./Pagination";
 
-export type Movie = {
-  _id: string;
-  name: string;
-  origin_name: string;
-  content: string;
-  type: string;
-  episode_current: string;
-  episode_total: string;
-  showtimes: string;
-  status: string;
-  time: string;
-  thumb_url: string;
+type Params = {
+  slug: string[];
+};
+
+type searchParams = {
   slug: string;
-  year: number;
-  poster_url: string;
-  actor: string[];
-  director: string[];
-  category: [
-    {
-      id: string;
-      name: string;
-      slug: string;
-    }
-  ];
-  country: [
-    {
-      id: string;
-      name: string;
-      slug: string;
-    }
-  ];
-  tmdb: {
-    type: string;
-    id: string;
-    season: number;
-    vote_average: number;
-    vote_count: number;
-  };
-  modified: {
-    time: string;
-  };
+  page: number;
+  sort_field: string;
+  category: string;
+  country: string;
+  year: string;
 };
 
-export type MoviesData = {
-  items: Movie[];
-  pathImage: "https://img.ophim.live/uploads/movies/";
-  pagination: {
-    totalItems: number;
-    totalItemsPerPage: number;
-    currentPage: number;
-    totalPages: number;
-  };
-  pageProps: {
-    data: {
-      items: Movie[];
-      titlePage: string;
-      APP_DOMAIN_CDN_IMAGE: string;
-      params: {
-        pagination: {
-          totalItems: number;
-          totalItemsPerPage: number;
-          currentPage: number;
-          pageRanges: number;
-        };
-      };
-    };
-  };
-};
-
-export default async function NewestMovies({ page }: { page: number }) {
-  const currentPage = page || 1;
-  const url =
-    "https://ophim1.com/danh-sach/phim-moi-cap-nhat?page=" + currentPage;
-  const res = await fetch(url, {
-    next: {
-      revalidate: 30,
-    },
-  });
+const getMovies = async (slug: string, page: number) => {
+  const url = `https://ophim17.cc/_next/data/j4bBHnWv9JD18kNQ3njRH/danh-sach/${slug}.json?slug=${slug}&sort_field=modified.time&category=&country=&year=&page=${
+    page || 1
+  }`;
+  const res = await fetch(url, { cache: "no-store" });
   const data: MoviesData = await res.json();
-  const movies = data.items;
+  return data.pageProps.data;
+};
+const getTheLoai = async () => {
+  const url = `https://ophim1.com/the-loai`;
+  const res = await fetch(url);
+  const data: theloais[] = await res.json();
+  return data;
+};
+
+const getQuocGia = async () => {
+  const url = `https://ophim1.com/quoc-gia`;
+  const res = await fetch(url);
+  const data: quocgia[] = await res.json();
+  return data;
+};
+
+export default async function page({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: searchParams;
+}) {
+  const slug = params.slug[0];
+
+  const [
+    {
+      items,
+      titlePage,
+      params: { pagination },
+      APP_DOMAIN_CDN_IMAGE,
+    },
+    theloais,
+    quocgias,
+  ] = await Promise.all([
+    getMovies(slug, searchParams.page),
+    getTheLoai(),
+    getQuocGia(),
+  ]);
 
   return (
-    <div className="mt-10">
-      <div className="flex items-center justify-between">
-        <h1 className=" text-lg md:text-2xl font-bold">Phim mới cập nhật</h1>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center gap-4">
+        <span>Lọc phim:</span>
+        <Filter theloais={theloais} quocgias={quocgias} />
       </div>
-      <div className="mt-4  grid grid-cols-3 md:grid-cols-4 gap-4">
-        {movies.map((movie) => (
+      <h1 className="font-bold text-3xl mt-4">{titlePage}</h1>
+
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-4">
+        {items.map((movie) => (
           <div className="md:w-[250px] w-[100px] relative" key={movie._id}>
             <Link
               href={`/detail/${movie.slug}`}
@@ -116,7 +101,7 @@ export default async function NewestMovies({ page }: { page: number }) {
                 </p>
               </div>
               <Image
-                src={`${data.pathImage}${movie.thumb_url}`}
+                src={`${APP_DOMAIN_CDN_IMAGE}/uploads/movies/${movie.thumb_url}`}
                 alt={movie.name}
                 width={200}
                 height={300}
@@ -132,8 +117,9 @@ export default async function NewestMovies({ page }: { page: number }) {
           </div>
         ))}
       </div>
+
       <div className="mt-4">
-        <PaginationComponent props={data.pagination} />
+        <PaginationComponent props={pagination} />
       </div>
     </div>
   );

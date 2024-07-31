@@ -65,16 +65,16 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden xl:flex items-center gap-8">
-        <Link className="hover:text-blue-300" href={"/"}>
+        <Link className="hover:text-blue-300" href={"/danhsach/phim-bo"}>
           Phim bộ
         </Link>
-        <Link className="hover:text-blue-300" href={"/"}>
+        <Link className="hover:text-blue-300" href={"/danhsach/phim-le"}>
           Phim lẻ
         </Link>
-        <Link className="hover:text-blue-300" href={"/"}>
+        <Link className="hover:text-blue-300" href={"/danhsach/tv-shows"}>
           Shows
         </Link>
-        <Link className="hover:text-blue-300" href={"/"}>
+        <Link className="hover:text-blue-300" href={"/danhsach/hoat-hinh"}>
           Hoạt hình
         </Link>
         <div
@@ -147,10 +147,10 @@ export default function Header() {
               <SheetTitle className="text-white">Menu</SheetTitle>
             </SheetHeader>
             <SheetDescription className="flex flex-col gap-4 text-white font-bold mt-4">
-              <Link href={"/"}>Phim bộ</Link>
-              <Link href={"/"}>Phim lẻ</Link>
-              <Link href={"/"}>Shows</Link>
-              <Link href={"/"}>Hoạt hình</Link>
+              <Link href={"/danhsach/phim-bo"}>Phim bộ</Link>
+              <Link href={"/danhsach/phim-le"}>Phim lẻ</Link>
+              <Link href={"/danhsach/tv-shows"}>Shows</Link>
+              <Link href={"/danhsach/hoat-hinh"}>Hoạt hình</Link>
               <Link href={"/"}>Subteam</Link>
             </SheetDescription>
           </SheetContent>

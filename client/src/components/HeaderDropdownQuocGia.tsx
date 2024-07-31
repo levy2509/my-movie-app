@@ -5,7 +5,7 @@ type HeaderDropdownProps = {
   showquocgia: boolean;
 };
 
-type quocgia = {
+export type quocgia = {
   _id: string;
   name: string;
   slug: string;

@@ -12,7 +12,6 @@ type PaginationProps = {
   totalItems: number;
   totalItemsPerPage: number;
   currentPage: number;
-  totalPages: number;
 };
 
 export default function PaginationComponent({
@@ -20,7 +19,8 @@ export default function PaginationComponent({
 }: {
   props: PaginationProps;
 }) {
-  const { totalItems, totalItemsPerPage, currentPage, totalPages } = props;
+  const { totalItems, totalItemsPerPage, currentPage } = props;
+  const totalPages = Math.ceil(totalItems / totalItemsPerPage);
   const pageRanges = 5;
 
   let startPage = Math.max(1, currentPage - Math.floor(pageRanges / 2));

@@ -5,7 +5,7 @@ type HeaderDropdownProps = {
   showloai: boolean;
 };
 
-type theloais = {
+export type theloais = {
   _id: string;
   name: string;
   slug: string;
