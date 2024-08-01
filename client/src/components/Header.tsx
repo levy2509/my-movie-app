@@ -13,8 +13,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-
 export default function Header() {
   const [showloai, setShowloai] = useState(false);
   const [showquocgia, setShowquocgia] = useState(false);
@@ -59,30 +57,29 @@ export default function Header() {
             className="w-full h-full object-cover"
           />
         </Link>
-        <Suspense fallback={<div>Loading...</div>}>
-          <form onSubmit={submitSearch} className="relative">
-            <input
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              className="search_input w-36 md:w-full"
-              placeholder="Tìm kiếm phim..."
+
+        <form onSubmit={submitSearch} className="relative">
+          <input
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+            className="search_input w-36 md:w-full"
+            placeholder="Tìm kiếm phim..."
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5 hidden md:block absolute right-2 top-2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-5 hidden md:block absolute right-2 top-2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          </form>
-        </Suspense>
+          </svg>
+        </form>
       </div>
       <div className="hidden xl:flex items-center gap-8">
         <Link className="hover:text-blue-300" href={"/danhsach/phim-bo"}>
