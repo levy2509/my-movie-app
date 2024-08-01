@@ -83,7 +83,7 @@ export default async function NewestMovies({
     category: string;
     country: string;
     year: string;
-  };
+  } | null;
 }) {
   const currentPage = page || 1;
   const url =
@@ -146,10 +146,7 @@ export default async function NewestMovies({
         ))}
       </div>
       <div className="mt-4">
-        <PaginationComponent
-          searchParams={searchParams}
-          props={data.pagination}
-        />
+        <PaginationComponent searchParams={null} props={data.pagination} />
       </div>
     </div>
   );

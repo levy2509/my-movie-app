@@ -9,7 +9,7 @@ export default function Home({
   return (
     <>
       <HeroSection />
-      <NewestMovies page={searchParams.page} />
+      <NewestMovies page={searchParams.page} searchParams={null} />
     </>
   );
 }

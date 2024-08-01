@@ -25,7 +25,7 @@ export default function PaginationComponent({
     category: string;
     country: string;
     year: string;
-  };
+  } | null;
   props: PaginationProps;
 }) {
   const { totalItems, totalItemsPerPage, currentPage } = props;
