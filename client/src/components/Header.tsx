@@ -27,10 +27,10 @@ export default function Header() {
     // console.log(search);
     if (search.trim() === "") return;
     const sp = new URLSearchParams(searchParams);
-    const searchPath = pathname === "/" ? "/timkiem" : pathname;
+    const searchPath = `/timkiem`;
     sp.set("keyword", search);
     sp.delete("page");
-    router.push(`${searchPath}?${sp.toString()}`);
+    router.replace(`${searchPath}?${sp.toString()}`);
   };
 
   useEffect(() => {

@@ -4,10 +4,8 @@ import { useEffect } from "react";
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
@@ -20,11 +18,11 @@ export default function Error({
         <div className="text-white font-bold">
           <h1>Oops! Something went wrong.</h1>
           <p>
-            Please try again later or contact support if the problem persists.
+            Please Refresh the page or try again later. If the problem persists,
           </p>
           <button
             className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={reset}
+            onClick={() => window.location.reload()}
           >
             Refresh
           </button>
