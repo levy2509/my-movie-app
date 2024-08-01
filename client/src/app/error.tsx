@@ -4,8 +4,10 @@ import { useEffect } from "react";
 
 export default function Error({
   error,
+  reset,
 }: {
   error: Error & { digest?: string };
+  reset(): void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
@@ -22,7 +24,7 @@ export default function Error({
           </p>
           <button
             className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => window.location.reload()}
+            onClick={() => reset()}
           >
             Refresh
           </button>
