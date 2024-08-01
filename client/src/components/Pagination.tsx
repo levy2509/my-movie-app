@@ -19,12 +19,13 @@ export default function PaginationComponent({
   props,
 }: {
   searchParams: {
-    slug: string;
-    page: number;
-    sort_field: string;
-    category: string;
-    country: string;
-    year: string;
+    slug?: string | null;
+    page?: number | null;
+    sort_field?: string | null;
+    category?: string | null;
+    country?: string | null;
+    year?: string | null;
+    keyword?: string | null;
   } | null;
   props: PaginationProps;
 }) {

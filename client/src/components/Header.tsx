@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import HeaderDropdownLoai from "./HeaderDropdownLoai";
 import HeaderDropdownQuocGia from "./HeaderDropdownQuocGia";
 import {
@@ -12,10 +12,26 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Header() {
   const [showloai, setShowloai] = useState(false);
   const [showquocgia, setShowquocgia] = useState(false);
+  const [search, setSearch] = useState("");
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const submitSearch = (e: FormEvent) => {
+    e.preventDefault();
+    // console.log(search);
+    if (search.trim() === "") return;
+    const sp = new URLSearchParams(searchParams);
+    const searchPath = pathname === "/" ? "/timkiem" : pathname;
+    sp.set("keyword", search);
+    sp.delete("page");
+    router.push(`${searchPath}?${sp.toString()}`);
+  };
 
   useEffect(() => {
     document.addEventListener("click", (e) => {
@@ -42,9 +58,10 @@ export default function Header() {
             className="w-full h-full object-cover"
           />
         </Link>
-        <div className="relative">
+        <form onSubmit={submitSearch} className="relative">
           <input
             type="text"
+            onChange={(e) => setSearch(e.target.value)}
             className="search_input w-36 md:w-full"
             placeholder="Tìm kiếm phim..."
           />
@@ -62,7 +79,7 @@ export default function Header() {
               d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
             />
           </svg>
-        </div>
+        </form>
       </div>
       <div className="hidden xl:flex items-center gap-8">
         <Link className="hover:text-blue-300" href={"/danhsach/phim-bo"}>
