@@ -19,14 +19,23 @@ type searchParams = {
   year: string;
 };
 
-const getMovies = async (slug: string, page: number) => {
-  const url = `https://ophim17.cc/_next/data/j4bBHnWv9JD18kNQ3njRH/danh-sach/${slug}.json?slug=${slug}&sort_field=modified.time&category=&country=&year=&page=${
+const getMovies = async (
+  slug: string,
+  page: number,
+  sort_field: string,
+  category: string,
+  country: string
+) => {
+  const url = `https://ophim17.cc/_next/data/j4bBHnWv9JD18kNQ3njRH/danh-sach/${slug}.json?slug=${slug}&sort_field=${
+    sort_field || "modified.time"
+  }&category=${category || ""}&country=${country || ""}&year=&page=${
     page || 1
   }`;
   const res = await fetch(url, { cache: "no-store" });
   const data: MoviesData = await res.json();
   return data.pageProps.data;
 };
+
 const getTheLoai = async () => {
   const url = `https://ophim1.com/the-loai`;
   const res = await fetch(url);
@@ -60,7 +69,13 @@ export default async function page({
     theloais,
     quocgias,
   ] = await Promise.all([
-    getMovies(slug, searchParams.page),
+    getMovies(
+      slug,
+      searchParams.page,
+      searchParams.sort_field,
+      searchParams.category,
+      searchParams.country
+    ),
     getTheLoai(),
     getQuocGia(),
   ]);
@@ -119,7 +134,7 @@ export default async function page({
       </div>
 
       <div className="mt-4">
-        <PaginationComponent props={pagination} />
+        <PaginationComponent searchParams={searchParams} props={pagination} />
       </div>
     </div>
   );

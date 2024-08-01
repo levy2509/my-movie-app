@@ -15,8 +15,17 @@ type PaginationProps = {
 };
 
 export default function PaginationComponent({
+  searchParams,
   props,
 }: {
+  searchParams: {
+    slug: string;
+    page: number;
+    sort_field: string;
+    category: string;
+    country: string;
+    year: string;
+  };
   props: PaginationProps;
 }) {
   const { totalItems, totalItemsPerPage, currentPage } = props;
@@ -45,11 +54,13 @@ export default function PaginationComponent({
               currentPage === 1
                 ? {
                     query: {
+                      ...searchParams,
                       page: 1,
                     },
                   }
                 : {
                     query: {
+                      ...searchParams,
                       page: currentPage - 1,
                     },
                   }
@@ -63,6 +74,7 @@ export default function PaginationComponent({
               className={currentPage === 1 ? "bg-white text-black" : ""}
               href={{
                 query: {
+                  ...searchParams,
                   page: 1,
                 },
               }}
@@ -81,6 +93,7 @@ export default function PaginationComponent({
                 className={page === currentPage ? "bg-white text-black" : ""}
                 href={{
                   query: {
+                    ...searchParams,
                     page: page,
                   },
                 }}
@@ -100,6 +113,7 @@ export default function PaginationComponent({
               }
               href={{
                 query: {
+                  ...searchParams,
                   page: totalPages,
                 },
               }}
@@ -115,11 +129,13 @@ export default function PaginationComponent({
               currentPage === totalPages
                 ? {
                     query: {
+                      ...searchParams,
                       page: totalPages,
                     },
                   }
                 : {
                     query: {
+                      ...searchParams,
                       page: currentPage + 1,
                     },
                   }
