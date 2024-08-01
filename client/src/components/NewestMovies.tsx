@@ -71,7 +71,20 @@ export type MoviesData = {
   };
 };
 
-export default async function NewestMovies({ page }: { page: number }) {
+export default async function NewestMovies({
+  page,
+  searchParams,
+}: {
+  page: number;
+  searchParams: {
+    slug: string;
+    page: number;
+    sort_field: string;
+    category: string;
+    country: string;
+    year: string;
+  };
+}) {
   const currentPage = page || 1;
   const url =
     "https://ophim1.com/danh-sach/phim-moi-cap-nhat?page=" + currentPage;
@@ -133,7 +146,10 @@ export default async function NewestMovies({ page }: { page: number }) {
         ))}
       </div>
       <div className="mt-4">
-        <PaginationComponent props={data.pagination} />
+        <PaginationComponent
+          searchParams={searchParams}
+          props={data.pagination}
+        />
       </div>
     </div>
   );
