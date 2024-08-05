@@ -34,7 +34,7 @@ export default function HeaderDropdownQuocGia({
         <Link
           key={index}
           className="p-2 rounded hover:bg-purple-400 h-fit "
-          href={"/quoc-gia/" + quocgia.slug}
+          href={"/quocgia/" + quocgia.slug}
         >
           {quocgia.name}
         </Link>

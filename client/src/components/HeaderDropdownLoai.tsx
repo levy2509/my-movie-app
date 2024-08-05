@@ -32,7 +32,7 @@ export default function HeaderDropdownLoai({ showloai }: HeaderDropdownProps) {
         <Link
           key={index}
           className="p-2 rounded hover:bg-purple-400 h-fit "
-          href={"/the-loai/" + theloai.slug}
+          href={"/theloai/" + theloai.slug}
         >
           {theloai.name}
         </Link>
